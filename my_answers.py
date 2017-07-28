@@ -13,9 +13,13 @@ def window_transform_series(series, window_size):
     X = []
     y = []
     
-    for index in range(0, len(series)):
+    # better algorithm?
+    
+    # length of series
+    series_length = len(series)
+    
+    for index in range(0, series_length):
         if (len(series)-index-window_size)>0:
-            print(series[index:index+window_size])
             X.append(series[index:index+window_size])
             y.append(series[index+window_size])
 
@@ -29,7 +33,17 @@ def window_transform_series(series, window_size):
 
 # TODO: build an RNN to perform regression on our time series input/output data
 def build_part1_RNN(window_size):
-    pass
+    model = Sequential()
+    
+    # layer 1 uses an LSTM module with 5 hidden units (note here the input_shape = (window_size,1))
+    model.add(LSTM(5, input_shape=(window_size, 1)))
+    
+    # layer 2 uses a fully connected module with one unit
+    model.add(Dense(1)) # one unit (Question : I think it should be at least two units???)
+    
+    return model
+    
+    
 
 
 ### TODO: return the text input with only ascii lowercase and the punctuation given below included.
