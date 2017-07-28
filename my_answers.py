@@ -12,6 +12,12 @@ def window_transform_series(series, window_size):
     # containers for input/output pairs
     X = []
     y = []
+    
+    for index in range(0, len(series)):
+        if (len(series)-index-window_size)>0:
+            print(series[index:index+window_size])
+            X.append(series[index:index+window_size])
+            y.append(series[index+window_size])
 
     # reshape each 
     X = np.asarray(X)
