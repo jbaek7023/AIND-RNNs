@@ -43,13 +43,18 @@ def build_part1_RNN(window_size):
     
     return model
     
-    
-
+import re    
 
 ### TODO: return the text input with only ascii lowercase and the punctuation given below included.
 def cleaned_text(text):
     punctuation = ['!', ',', '.', ':', ';', '?']
-
+    # Because of this, the effect of line.replace(...) is just to create a new string, rather than changing the old one. 
+    punctuation.append(' ')
+    
+    regex_rule = '[^a-zA-Z'+ re.escape(''.join(punctuation)) +']'
+    regex = re.compile(regex_rule)
+    #First parameter is the replacement, second parameter is your input string
+    text = regex.sub('', text)
     return text
 
 ### TODO: fill out the function below that transforms the input text and window-size into a set of input/output pairs for use with our RNN model
@@ -64,7 +69,7 @@ def window_transform_text(text, window_size, step_size):
         outputs.append(text[index+window_size])
         index = index + step_size
 
-    return inputs,outputs
+    return inputs, outputs
 
 # TODO build the required RNN model: 
 # a single LSTM hidden layer with softmax activation, categorical_crossentropy loss 
