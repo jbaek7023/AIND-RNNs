@@ -19,7 +19,7 @@ def window_transform_series(series, window_size):
     series_length = len(series)
     
     for index in range(0, series_length):
-        if (len(series)-index-window_size)>0:
+        if (series_length-index-window_size)>0:
             X.append(series[index:index+window_size])
             y.append(series[index+window_size])
 
@@ -57,6 +57,12 @@ def window_transform_text(text, window_size, step_size):
     # containers for input/output pairs
     inputs = []
     outputs = []
+    
+    index = 0 
+    while (len(text)-index-window_size)>0:
+        inputs.append(text[index:index+window_size])
+        outputs.append(text[index+window_size])
+        index = index + step_size
 
     return inputs,outputs
 
